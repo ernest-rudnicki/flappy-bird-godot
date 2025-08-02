@@ -1,0 +1,30 @@
+# Godot generated folders
+.import/
+.export/
+.godot/
+
+# Godot import files
+*.import
+*.godot-import
+
+# Temporary/editor files
+*.tmp
+*.converted.res
+*.converted.scn
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs and backups
+*.log
+*.bak
+
+# Builds (optional)
+build/
+bin/
+dist/
+
+# VS Code config (optional, if local only)
+.vscode/
+
