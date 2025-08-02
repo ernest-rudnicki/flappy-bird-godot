@@ -1,7 +1,26 @@
-[gd_scene format=3 uid="uid://e2ho0q4agttx"]
+[gd_scene load_steps=4 format=3 uid="uid://e2ho0q4agttx"]
+
+[ext_resource type="Script" uid="uid://c5xoekviugg73" path="res://Player/Player_Movement.gd" id="1_kf6th"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xr540"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xr540"]
+size = Vector3(1, 1.8277, 1)
 
 [node name="Root_Scene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.56155)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7761, 0, 10.5615)
 projection = 1
+size = 19.048
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_kf6th")
+
+[node name="Player" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("CapsuleMesh_xr540")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0159607, 0)
+shape = SubResource("BoxShape3D_xr540")
