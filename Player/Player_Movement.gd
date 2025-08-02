@@ -16,3 +16,5 @@ func _physics_process(delta: float) -> void:
 		
 	if velocity.y < canJumpForceTreshold:
 		cannotJump = false
+		
+	move_and_slide()
