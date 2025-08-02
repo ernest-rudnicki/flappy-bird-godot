@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 
-@export var gravity: float = 9.81;
+@export var gravity: float = 40;
 @export var jumpForce: float = 20;
 @export var canJumpForceTreshold: float = -10;
 
