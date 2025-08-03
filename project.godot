@@ -15,6 +15,10 @@ run/main_scene="uid://e2ho0q4agttx"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[global_group]
+
+player="player group"
+
 [input]
 
 jump={
