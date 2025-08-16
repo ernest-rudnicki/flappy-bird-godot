@@ -1,6 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://e2ho0q4agttx"]
 
 [ext_resource type="Script" uid="uid://c5xoekviugg73" path="res://Player/Player_Movement.gd" id="1_kf6th"]
+[ext_resource type="Script" uid="uid://clcog87scwbt6" path="res://Obstacles/ObstacleManager.gd" id="2_fqahy"]
+[ext_resource type="PackedScene" uid="uid://d1prqmwuuxbw1" path="res://Obstacles/Obstacle.tscn" id="3_hleyi"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xr540"]
 
@@ -18,27 +20,21 @@ background_energy_multiplier = 1.68
 sky = SubResource("Sky_fqahy")
 ambient_light_energy = 8.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kf6th"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0)
-
-[sub_resource type="BoxMesh" id="BoxMesh_fqahy"]
-material = SubResource("StandardMaterial3D_kf6th")
+[sub_resource type="BoxMesh" id="BoxMesh_kf6th"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kf6th"]
 size = Vector3(2.02789, 2.0239, 2.12109)
 
-[sub_resource type="BoxMesh" id="BoxMesh_kf6th"]
-
 [node name="Root_Scene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7761, 0, 10.5615)
-projection = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7761, 0, 33.5115)
+keep_aspect = 0
 size = 20.0
 
 [node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
 script = ExtResource("1_kf6th")
+maxYValue = 14.0
 
 [node name="Player" type="MeshInstance3D" parent="Player"]
 mesh = SubResource("CapsuleMesh_xr540")
@@ -51,19 +47,6 @@ shape = SubResource("BoxShape3D_xr540")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kf6th")
 
-[node name="UpperBoundary" type="Area3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 10, 0)
-disable_mode = 1
-
-[node name="Mesh" type="MeshInstance3D" parent="UpperBoundary"]
-transform = Transform3D(1.99992, 0, -0.017837, 6.4442e-05, 1.99999, 0.00722536, 0.0178369, -0.00722565, 1.99991, 0, 0, 0)
-mesh = SubResource("BoxMesh_fqahy")
-skeleton = NodePath("")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="UpperBoundary"]
-transform = Transform3D(1, 0, 0, 0, 0.999989, 0.00476473, 0, -0.00476473, 0.999989, -0.005, 0.025, -0.002)
-shape = SubResource("BoxShape3D_kf6th")
-
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 2, 0, 0, 0, 10, 0, -10, 0)
 
@@ -75,3 +58,8 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 0.999989, 0.00476473, 0, -0.00476473, 0.999989, -0.00454712, 0.0246706, -0.00205702)
 shape = SubResource("BoxShape3D_kf6th")
+
+[node name="ObstacleManager" type="Node3D" parent="."]
+transform = Transform3D(0.998915, 0, 0.046566, 0, 1, 0, -0.046566, 0, 0.998915, 42.1993, 1, 0)
+script = ExtResource("2_fqahy")
+obstacle_scene = ExtResource("3_hleyi")
