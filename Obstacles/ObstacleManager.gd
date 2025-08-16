@@ -4,11 +4,10 @@ extends Node3D
 @export var obstacle_scene: PackedScene
 @export var speed: float = 5.0;
 
-@export var upper_start_position: float = 14.6;
-@export var lower_start_position: float = -8.0;
 
-@export var minScale: float = 2.0
-@export var maxScale: float = 7.0
+@export var gap_size: float = 4.0
+@export var min_center: float = -4.0
+@export var max_center: float = 4.0
 
 var obstacles: Array[Node3D] = []
 var rng = RandomNumberGenerator.new()
@@ -28,20 +27,21 @@ func move_all_obstacles(delta: float) -> void:
 func create_obstacle() -> void:
 	var upper_obstacle = instantiate_obstacle()
 	var lower_obstacle = instantiate_obstacle()
+	var gap_center = randomize_gap_center()
 	
-	upper_obstacle.rotate_x(PI)
+	lower_obstacle.rotate_x(PI)
 	
-	upper_obstacle.global_position = Vector3(global_position.x, upper_start_position, 0)
-	lower_obstacle.global_position = Vector3(global_position.x, lower_start_position, 0)
+	upper_obstacle.global_position = Vector3(global_position.x, 0, 0)
+	lower_obstacle.global_position = Vector3(global_position.x, 0, 0)
 	
-	#upper_obstacle.scale.y = 12.0
-	#lower_obstacle.scale.y = randomize_scale()
+	upper_obstacle.global_position.y = gap_center + gap_size
+	lower_obstacle.global_position.y = gap_center - gap_size
 	
 	obstacles.push_back(upper_obstacle)
-	#obstacles.push_back(lower_obstacle)
+	obstacles.push_back(lower_obstacle)
 
-func randomize_scale() -> float:
-	return rng.randf_range(minScale, maxScale)
+func randomize_gap_center() -> float:
+	return rng.randf_range(min_center, max_center)
 
 func instantiate_obstacle() -> Node3D:
 	var obstacle = obstacle_scene.instantiate()
