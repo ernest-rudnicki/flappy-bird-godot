@@ -63,3 +63,9 @@ shape = SubResource("BoxShape3D_kf6th")
 transform = Transform3D(0.998915, 0, 0.046566, 0, 1, 0, -0.046566, 0, 0.998915, 42.1993, 1, 0)
 script = ExtResource("2_fqahy")
 obstacle_scene = ExtResource("3_hleyi")
+
+[node name="Timer" type="Timer" parent="ObstacleManager"]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="ObstacleManager/Timer" to="ObstacleManager" method="_on_timer_timeout"]
