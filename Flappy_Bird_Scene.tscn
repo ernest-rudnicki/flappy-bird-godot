@@ -28,14 +28,17 @@ background_mode = 2
 background_energy_multiplier = 1.68
 sky = SubResource("Sky_fqahy")
 ambient_light_energy = 8.0
-ssr_enabled = true
 ssao_enabled = true
+ssil_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.869377, 0.800718, 0.78553, 1)
 fog_sun_scatter = 0.08
-fog_density = 0.005
+fog_density = 0.003
 fog_aerial_perspective = 1.0
 fog_sky_affect = 0.812
+volumetric_fog_density = 0.0203
+adjustment_enabled = true
+adjustment_contrast = 0.92
 
 [sub_resource type="BoxMesh" id="BoxMesh_kf6th"]
 

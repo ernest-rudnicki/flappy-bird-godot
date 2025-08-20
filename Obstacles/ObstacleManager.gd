@@ -8,6 +8,7 @@ extends Node3D
 @export var min_center: float = -4.0
 @export var max_center: float = 4.0
 @export var spawn_interval: float = 2.0
+@export var remove_position: float = -20.0
 
 var obstacles: Array[Node3D] = []
 var rng = RandomNumberGenerator.new()
@@ -27,7 +28,7 @@ func move_all_obstacles(delta: float) -> void:
 	for obstacle in obstacles:
 		obstacle.global_position.x -= speed * delta
 		
-		if obstacle.global_position.x < -15.0:
+		if obstacle.global_position.x < remove_position:
 			obstacle.queue_free()
 			to_remove.append(obstacle)
 			
