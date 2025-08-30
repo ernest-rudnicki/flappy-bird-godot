@@ -1,15 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://e2ho0q4agttx"]
+[gd_scene load_steps=14 format=3 uid="uid://e2ho0q4agttx"]
 
 [ext_resource type="Script" uid="uid://c5xoekviugg73" path="res://Player/Player_Movement.gd" id="1_kf6th"]
 [ext_resource type="Texture2D" uid="uid://bngkjwvfmhjn" path="res://Assets/sky_40_2k.png" id="2_0nxyy"]
 [ext_resource type="Script" uid="uid://clcog87scwbt6" path="res://Obstacles/ObstacleManager.gd" id="2_fqahy"]
-[ext_resource type="PackedScene" uid="uid://d1prqmwuuxbw1" path="res://Obstacles/Obstacle.tscn" id="3_hleyi"]
+[ext_resource type="PackedScene" uid="uid://bbq6vuoow3pbw" path="res://Rocket/Rocket.tscn" id="2_op76v"]
+[ext_resource type="PackedScene" uid="uid://4mky3a7py3xb" path="res://Obstacles/Obstacle.tscn" id="3_hleyi"]
 [ext_resource type="PackedScene" uid="uid://dyj0ocf07job3" path="res://Water/WaterPlane.tscn" id="5_7gexg"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_xr540"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0nxyy"]
-albedo_color = Color(0.659802, 0.693818, 0.510901, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr540"]
 size = Vector3(1, 1.8277, 1)
@@ -28,15 +24,23 @@ background_mode = 2
 background_energy_multiplier = 1.68
 sky = SubResource("Sky_fqahy")
 ambient_light_energy = 8.0
+reflected_light_source = 2
 ssao_enabled = true
 ssil_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_bounce_feedback = 0.0
+glow_normalized = true
 fog_enabled = true
-fog_light_color = Color(0.869377, 0.800718, 0.78553, 1)
+fog_light_color = Color(0.522372, 0.913829, 0.71211, 1)
 fog_sun_scatter = 0.08
-fog_density = 0.003
+fog_density = 0.001
 fog_aerial_perspective = 1.0
 fog_sky_affect = 0.812
-volumetric_fog_density = 0.0203
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.001
+volumetric_fog_albedo = Color(0.21714, 0.571694, 0.445162, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 3.75
 adjustment_enabled = true
 adjustment_contrast = 0.92
 
@@ -60,14 +64,12 @@ size = 20.0
 script = ExtResource("1_kf6th")
 maxYValue = 14.0
 
-[node name="Player" type="MeshInstance3D" parent="Player"]
-mesh = SubResource("CapsuleMesh_xr540")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_0nxyy")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0159607, 0)
 shape = SubResource("BoxShape3D_xr540")
+
+[node name="Rocket" parent="Player" instance=ExtResource("2_op76v")]
+transform = Transform3D(0.999999, 0.00136846, -0.00097872, -0.00168093, 0.837191, -0.546908, 7.09541e-05, 0.546909, 0.837192, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kf6th")

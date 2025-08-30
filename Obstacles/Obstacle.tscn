@@ -1,7 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1prqmwuuxbw1"]
+[gd_scene load_steps=4 format=3 uid="uid://4mky3a7py3xb"]
 
 [ext_resource type="PackedScene" uid="uid://dybk15dp135i" path="res://Models/Obstacle.glb" id="1_mixhw"]
+[ext_resource type="Shader" uid="uid://1dao2tqrgot0" path="res://Shaders/PerfectOutline.gdshader" id="2_a2q3a"]
 
-[node name="Obstacle" type="Node3D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_55j80"]
+render_priority = 0
+shader = ExtResource("2_a2q3a")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 1.0
+shader_parameter/constant_width = true
 
-[node name="ObstacleMesh" parent="." instance=ExtResource("1_mixhw")]
+[node name="Obstacle2" instance=ExtResource("1_mixhw")]
+
+[node name="Obstacle" parent="." index="0"]
+transform = Transform3D(0.0116181, 2.04062e-05, 7.92778e-06, 9.27448e-06, -3.64836e-05, -0.00999995, -2.03772e-05, 0.0116181, -3.14164e-05, 0, 0, 0)
+material_overlay = SubResource("ShaderMaterial_55j80")

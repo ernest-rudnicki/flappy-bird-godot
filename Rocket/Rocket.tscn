@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbq6vuoow3pbw"]
+
+[ext_resource type="PackedScene" uid="uid://dai37j1rpsl02" path="res://Models/Rocket.glb" id="1_obq1k"]
+[ext_resource type="Shader" uid="uid://1dao2tqrgot0" path="res://Shaders/PerfectOutline.gdshader" id="2_q32x0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ncmv"]
+render_priority = 0
+shader = ExtResource("2_q32x0")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 1.2
+shader_parameter/constant_width = true
+
+[node name="Rocket" instance=ExtResource("1_obq1k")]
+
+[node name="Cylinder_009" parent="." index="0"]
+material_overlay = SubResource("ShaderMaterial_3ncmv")
