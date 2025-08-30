@@ -30,6 +30,7 @@ ssil_enabled = true
 sdfgi_use_occlusion = true
 sdfgi_bounce_feedback = 0.0
 glow_normalized = true
+glow_intensity = 2.78
 fog_enabled = true
 fog_light_color = Color(0.522372, 0.913829, 0.71211, 1)
 fog_sun_scatter = 0.08
