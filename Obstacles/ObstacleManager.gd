@@ -10,10 +10,11 @@ extends Node3D
 @export var spawn_interval: float = 2.0
 @export var remove_position: float = -20.0
 
-@export var precreated_obstacles_count = 20;
+@export var precreated_obstacles_count = 20
+@export var player: CharacterBody3D
 
-var obstacles: Array[Node3D] = []
-var unused_obstacles: Array[Node3D] = []
+var obstacles: Array[Area3D] = []
+var unused_obstacles: Array[Area3D] = []
 
 var rng = RandomNumberGenerator.new()
 
@@ -60,6 +61,9 @@ func create_obstacle() -> void:
 	var lower_obstacle = instantiate_obstacle()
 	lower_obstacle.rotate_x(PI)
 	
+	upper_obstacle.body_entered.connect(_on_area_entered)
+	lower_obstacle.body_entered.connect(_on_area_entered)
+	
 	setup_obstacle_position(upper_obstacle, lower_obstacle)
 	
 	unused_obstacles.push_back(upper_obstacle)
@@ -81,3 +85,7 @@ func instantiate_obstacle() -> Node3D:
 	var obstacle = obstacle_scene.instantiate()
 	add_child(obstacle)
 	return obstacle
+	
+func _on_area_entered(body: Node) -> void:
+	if body == player:
+		print("Player wszedł w obstacle Area3D:", body.name)

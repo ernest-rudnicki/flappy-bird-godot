@@ -32,4 +32,3 @@ func restrict_movement() -> void:
 	
 	if global_position.y == maxYValue:
 		velocity.y = 0.0
-	
