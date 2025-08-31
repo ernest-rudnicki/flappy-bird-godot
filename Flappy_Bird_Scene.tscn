@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://e2ho0q4agttx"]
+[gd_scene load_steps=12 format=3 uid="uid://e2ho0q4agttx"]
 
 [ext_resource type="Script" uid="uid://c5xoekviugg73" path="res://Player/Player_Movement.gd" id="1_kf6th"]
 [ext_resource type="Texture2D" uid="uid://bngkjwvfmhjn" path="res://Assets/sky_40_2k.png" id="2_0nxyy"]
@@ -45,6 +45,10 @@ volumetric_fog_gi_inject = 3.75
 adjustment_enabled = true
 adjustment_contrast = 0.92
 
+[sub_resource type="LabelSettings" id="LabelSettings_op76v"]
+font_size = 36
+shadow_color = Color(0.151276, 0.151276, 0.151276, 0)
+
 [node name="Root_Scene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -72,10 +76,11 @@ collide_with_bodies = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kf6th")
 
-[node name="ObstacleManager" type="Node3D" parent="." node_paths=PackedStringArray("player")]
+[node name="ObstacleManager" type="Node3D" parent="." node_paths=PackedStringArray("score_label", "player")]
 transform = Transform3D(0.998915, 0, 0.046566, 0, 1, 0, -0.046566, 0, 0.998915, 47.9075, 1, 0)
 script = ExtResource("2_fqahy")
 obstacle_scene = ExtResource("3_hleyi")
+score_label = NodePath("../CanvasLayer/Control/Label")
 player = NodePath("../Player")
 
 [node name="Timer" type="Timer" parent="ObstacleManager"]
@@ -96,6 +101,29 @@ light_energy = 0.7
 
 [node name="WaterPlane" parent="." instance=ExtResource("5_7gexg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.42924, 0)
-visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 50.0
+offset_right = 20.0
+offset_bottom = 100.0
+grow_horizontal = 2
+text = "0"
+label_settings = SubResource("LabelSettings_op76v")
+horizontal_alignment = 1
 
 [connection signal="timeout" from="ObstacleManager/Timer" to="ObstacleManager" method="_on_timer_timeout"]

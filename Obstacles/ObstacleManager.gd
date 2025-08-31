@@ -6,6 +6,7 @@ extends Node3D
 
 @export var score_per_obstacle: int = 10;
 @export var score_obstacle_group = "score_obstacle"
+@export var score_label: Label
 
 @export var gap_size: float = 4.0
 @export var min_center: float = -4.0
@@ -109,4 +110,5 @@ func check_raycast_hit_obstacle() -> void:
 	elif has_hit:
 		has_hit = false;
 		score += score_per_obstacle
+		score_label.text = "%d" % score
 		
