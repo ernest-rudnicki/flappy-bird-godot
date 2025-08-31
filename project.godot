@@ -19,6 +19,7 @@ config/icon="res://Assets/icon.svg"
 
 player="player group"
 obstacle=""
+score_obstacle=""
 
 [input]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://e2ho0q4agttx"]
+[gd_scene load_steps=11 format=3 uid="uid://e2ho0q4agttx"]
 
 [ext_resource type="Script" uid="uid://c5xoekviugg73" path="res://Player/Player_Movement.gd" id="1_kf6th"]
 [ext_resource type="Texture2D" uid="uid://bngkjwvfmhjn" path="res://Assets/sky_40_2k.png" id="2_0nxyy"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dyj0ocf07job3" path="res://Water/WaterPlane.tscn" id="5_7gexg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr540"]
-size = Vector3(2.7981, 1.16853, 2.65989)
+size = Vector3(2.7981, 0.953284, 2.45836)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7gexg"]
 panorama = ExtResource("2_0nxyy")
@@ -45,15 +45,6 @@ volumetric_fog_gi_inject = 3.75
 adjustment_enabled = true
 adjustment_contrast = 0.92
 
-[sub_resource type="BoxMesh" id="BoxMesh_kf6th"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hleyi"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_kf6th"]
-size = Vector3(2.02789, 2.0239, 2.12109)
-
 [node name="Root_Scene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -67,27 +58,19 @@ script = ExtResource("1_kf6th")
 maxYValue = 14.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0435791, 0.176511, 0.152646)
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -0.0435791, 0.0688877, 0.25341)
 shape = SubResource("BoxShape3D_xr540")
 debug_color = Color(0.840528, 0.00113338, 0.921966, 0.42)
 
 [node name="Rocket" parent="Player" instance=ExtResource("2_op76v")]
 
+[node name="Raycast" type="RayCast3D" parent="Player"]
+transform = Transform3D(100, 0, 0, 0, 83.8671, 54.4639, 0, -54.4639, 83.8671, 0, -0.255083, 0.165654)
+collide_with_areas = true
+collide_with_bodies = false
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kf6th")
-
-[node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(100, 0, 0, 0, 2, 0, 0, 0, 10, 0, -35.7997, 0)
-
-[node name="UpperBoundaryMesh" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1.99992, 0, -0.017837, 6.4442e-05, 1.99999, 0.00722536, 0.0178369, -0.00722565, 1.99991, 0, 0, 0)
-mesh = SubResource("BoxMesh_kf6th")
-skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_hleyi")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 0.999989, 0.00476473, 0, -0.00476473, 0.999989, -0.00454712, 0.0246706, -0.00205702)
-shape = SubResource("BoxShape3D_kf6th")
 
 [node name="ObstacleManager" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 transform = Transform3D(0.998915, 0, 0.046566, 0, 1, 0, -0.046566, 0, 0.998915, 47.9075, 1, 0)
@@ -113,5 +96,6 @@ light_energy = 0.7
 
 [node name="WaterPlane" parent="." instance=ExtResource("5_7gexg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.42924, 0)
+visible = false
 
 [connection signal="timeout" from="ObstacleManager/Timer" to="ObstacleManager" method="_on_timer_timeout"]

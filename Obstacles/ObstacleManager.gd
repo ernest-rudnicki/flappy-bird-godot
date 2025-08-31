@@ -4,6 +4,9 @@ extends Node3D
 @export var obstacle_scene: PackedScene
 @export var speed: float = 5.0;
 
+@export var score_per_obstacle: int = 10;
+@export var score_obstacle_group = "score_obstacle"
+
 @export var gap_size: float = 4.0
 @export var min_center: float = -4.0
 @export var max_center: float = 4.0
@@ -15,18 +18,24 @@ extends Node3D
 
 var obstacles: Array[Area3D] = []
 var unused_obstacles: Array[Area3D] = []
+var player_raycast: RayCast3D = null
+var has_hit: bool = false
 
 var rng = RandomNumberGenerator.new()
+
+var score: int = 0;
 
 func _ready() -> void:
 	precreate_obstacles()
 	reuse_unused_obstacle()
+	player_raycast = player.get_node("Raycast")
 
 func _on_timer_timeout() -> void:
 	reuse_unused_obstacle()
 
 func _process(delta: float) -> void:
 	move_all_obstacles(delta)
+	check_raycast_hit_obstacle()
 	
 func move_all_obstacles(delta: float) -> void:
 	var to_remove: Array = []
@@ -39,6 +48,7 @@ func move_all_obstacles(delta: float) -> void:
 			
 	for removed in to_remove:
 		obstacles.erase(removed)
+		removed.remove_from_group(score_obstacle_group)
 		unused_obstacles.push_back(removed)
 		
 func precreate_obstacles() -> void:
@@ -49,6 +59,7 @@ func reuse_unused_obstacle() -> void:
 	if unused_obstacles.size() != 0:
 		var upper_obstacle = unused_obstacles.pop_front()
 		var lower_obstacle = unused_obstacles.pop_front()
+		lower_obstacle.add_to_group(score_obstacle_group)
 		
 		setup_obstacle_position(upper_obstacle, lower_obstacle)
 		
@@ -89,3 +100,13 @@ func instantiate_obstacle() -> Node3D:
 func _on_area_entered(body: Node) -> void:
 	if body == player:
 		print("Player wszedł w obstacle Area3D:", body.name)
+
+func check_raycast_hit_obstacle() -> void:
+	if player_raycast.is_colliding():
+		var hit = player_raycast.get_collider()
+		if hit and hit.is_in_group(score_obstacle_group):
+			has_hit = true
+	elif has_hit:
+		has_hit = false;
+		score += score_per_obstacle
+		
