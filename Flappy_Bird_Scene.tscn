@@ -1,15 +1,101 @@
-[gd_scene load_steps=13 format=3 uid="uid://e2ho0q4agttx"]
+[gd_scene load_steps=28 format=3 uid="uid://e2ho0q4agttx"]
 
 [ext_resource type="Script" uid="uid://c5xoekviugg73" path="res://Player/Player_Movement.gd" id="1_kf6th"]
 [ext_resource type="Texture2D" uid="uid://bngkjwvfmhjn" path="res://Assets/sky_40_2k.png" id="2_0nxyy"]
 [ext_resource type="Script" uid="uid://clcog87scwbt6" path="res://Obstacles/ObstacleManager.gd" id="2_fqahy"]
 [ext_resource type="PackedScene" uid="uid://bbq6vuoow3pbw" path="res://Rocket/Rocket.tscn" id="2_op76v"]
+[ext_resource type="Texture2D" uid="uid://dullhoo3eufw4" path="res://Assets/Particle Smoke.png" id="3_0h84t"]
 [ext_resource type="PackedScene" uid="uid://4mky3a7py3xb" path="res://Obstacles/Obstacle.tscn" id="3_hleyi"]
 [ext_resource type="PackedScene" uid="uid://dyj0ocf07job3" path="res://Water/WaterPlane.tscn" id="5_7gexg"]
 [ext_resource type="FontFile" uid="uid://bvfcowijb3ihv" path="res://Font/PressStart2P-Regular.ttf" id="7_ut4oh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr540"]
 size = Vector3(2.7981, 0.953284, 2.45836)
+
+[sub_resource type="Gradient" id="Gradient_ut4oh"]
+offsets = PackedFloat32Array(0, 0.626113, 1)
+colors = PackedColorArray(1, 0.745098, 0.470588, 1, 0.509804, 0.509804, 0.509804, 0.784314, 0.27451, 0.27451, 0.27451, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0h84t"]
+gradient = SubResource("Gradient_ut4oh")
+
+[sub_resource type="Curve" id="Curve_ut4oh"]
+_limits = [0.0, 1.6, 0.0, 1.0]
+_data = [Vector2(0, 0.201509), 0.0, 0.0, 0, 0, Vector2(1, 1.6), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0h84t"]
+curve = SubResource("Curve_ut4oh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ut4oh"]
+lifetime_randomness = 0.43
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 0, -1)
+spread = 0.0
+initial_velocity_min = 2.2
+initial_velocity_max = 2.2
+gravity = Vector3(-5, -1, 0)
+damping_min = 0.169
+damping_max = 0.731
+scale_curve = SubResource("CurveTexture_0h84t")
+color_ramp = SubResource("GradientTexture1D_0h84t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_83cxq"]
+transparency = 1
+albedo_texture = ExtResource("3_0h84t")
+albedo_texture_force_srgb = true
+billboard_mode = 1
+proximity_fade_enabled = true
+proximity_fade_distance = 0.2
+
+[sub_resource type="QuadMesh" id="QuadMesh_075ms"]
+material = SubResource("StandardMaterial3D_83cxq")
+
+[sub_resource type="Gradient" id="Gradient_0h84t"]
+offsets = PackedFloat32Array(0, 0.302671, 0.724036, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 0.290196, 0.101961, 1, 1, 0.647059, 0.227451, 1, 1, 0.968627, 0.752941, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_12gsq"]
+gradient = SubResource("Gradient_0h84t")
+
+[sub_resource type="Curve" id="Curve_83cxq"]
+_limits = [0.0, 1.2, 0.0, 1.0]
+_data = [Vector2(0.00275482, 1.2), 0.0, 0.0, 0, 0, Vector2(0.99999, 0.199784), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_075ms"]
+curve = SubResource("Curve_83cxq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ux2ks"]
+direction = Vector3(-1, 0, 0)
+spread = 15.0
+initial_velocity_min = 8.0
+initial_velocity_max = 14.0
+gravity = Vector3(0, 0, 0)
+damping_min = 1.0
+damping_max = 1.6
+scale_curve = SubResource("CurveTexture_075ms")
+color_ramp = SubResource("GradientTexture1D_12gsq")
+turbulence_enabled = true
+turbulence_noise_strength = 0.3
+turbulence_noise_scale = 0.8
+turbulence_noise_speed = Vector3(0, 0, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8f1k4"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("3_0h84t")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+proximity_fade_enabled = true
+proximity_fade_distance = 0.15
+
+[sub_resource type="QuadMesh" id="QuadMesh_p0vpc"]
+material = SubResource("StandardMaterial3D_8f1k4")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7gexg"]
 panorama = ExtResource("2_0nxyy")
@@ -77,6 +163,26 @@ transform = Transform3D(100, 0, 0, 0, 83.8671, 54.4639, 0, -54.4639, 83.8671, 0,
 collide_with_areas = true
 collide_with_bodies = false
 
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Player"]
+transform = Transform3D(0.962837, -0.0227033, 0.26913, 0.202072, 0.721703, -0.662052, -0.179201, 0.691831, 0.699469, -1.37651, -0.0484685, -0.870274)
+visible = false
+amount = 5
+lifetime = 2.0
+preprocess = 0.3
+speed_scale = 0.4
+randomness = 0.54
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_ut4oh")
+draw_pass_1 = SubResource("QuadMesh_075ms")
+
+[node name="JetFlame" type="GPUParticles3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -1.52433, -0.128872, 0.827376)
+amount = 120
+lifetime = 0.15
+preprocess = 0.1
+process_material = SubResource("ParticleProcessMaterial_ux2ks")
+draw_pass_1 = SubResource("QuadMesh_p0vpc")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kf6th")
 
@@ -105,6 +211,7 @@ light_energy = 0.7
 
 [node name="WaterPlane" parent="." instance=ExtResource("5_7gexg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.42924, 0)
+visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
