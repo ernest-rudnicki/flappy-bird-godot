@@ -21,6 +21,7 @@ var obstacles: Array[Area3D] = []
 var unused_obstacles: Array[Area3D] = []
 var player_raycast: RayCast3D = null
 var has_hit: bool = false
+var stopped_movement: bool = false
 
 var rng = RandomNumberGenerator.new()
 
@@ -39,6 +40,8 @@ func _process(delta: float) -> void:
 	check_raycast_hit_obstacle()
 	
 func move_all_obstacles(delta: float) -> void:
+	if stopped_movement: return
+	
 	var to_remove: Array = []
 	
 	for obstacle in obstacles:
@@ -73,8 +76,8 @@ func create_obstacle() -> void:
 	var lower_obstacle = instantiate_obstacle()
 	lower_obstacle.rotate_x(PI)
 	
-	upper_obstacle.body_entered.connect(_on_area_entered)
-	lower_obstacle.body_entered.connect(_on_area_entered)
+	upper_obstacle.body_entered.connect(_on_area_entered.bind(upper_obstacle))
+	lower_obstacle.body_entered.connect(_on_area_entered.bind(lower_obstacle))
 	
 	setup_obstacle_position(upper_obstacle, lower_obstacle)
 	
@@ -98,9 +101,12 @@ func instantiate_obstacle() -> Node3D:
 	add_child(obstacle)
 	return obstacle
 	
-func _on_area_entered(body: Node) -> void:
+func _on_area_entered(body: Node, obstacle: Area3D) -> void:
 	if body == player:
-		print("Player wszedł w obstacle Area3D:", body.name)
+		var hit_pos = obstacle.global_transform.origin
+		var hit_normal = (player.global_transform.origin - hit_pos).normalized()
+		player.explode(hit_pos, hit_normal)
+		stopped_movement = true
 
 func check_raycast_hit_obstacle() -> void:
 	if player_raycast.is_colliding():
