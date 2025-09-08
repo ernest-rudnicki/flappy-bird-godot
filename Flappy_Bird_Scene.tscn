@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://e2ho0q4agttx"]
+[gd_scene load_steps=29 format=3 uid="uid://e2ho0q4agttx"]
 
 [ext_resource type="Script" uid="uid://c5xoekviugg73" path="res://Player/Player_Movement.gd" id="1_kf6th"]
 [ext_resource type="Texture2D" uid="uid://bngkjwvfmhjn" path="res://Assets/sky_40_2k.png" id="2_0nxyy"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dullhoo3eufw4" path="res://Assets/Particle Smoke.png" id="3_0h84t"]
 [ext_resource type="PackedScene" uid="uid://4mky3a7py3xb" path="res://Obstacles/Obstacle.tscn" id="3_hleyi"]
 [ext_resource type="PackedScene" uid="uid://dyj0ocf07job3" path="res://Water/WaterPlane.tscn" id="5_7gexg"]
-[ext_resource type="FontFile" uid="uid://bvfcowijb3ihv" path="res://Font/PressStart2P-Regular.ttf" id="7_ut4oh"]
+[ext_resource type="FontFile" uid="uid://bvfcowijb3ihv" path="res://Assets/PressStart2P-Regular.ttf" id="7_ut4oh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr540"]
 size = Vector3(2.7981, 0.953284, 2.45836)
@@ -103,6 +103,36 @@ outline_size = 12
 outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0.151276, 0.151276, 0.151276, 0)
 
+[sub_resource type="LabelSettings" id="LabelSettings_12gsq"]
+font = ExtResource("7_ut4oh")
+font_size = 36
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_83cxq"]
+font = ExtResource("7_ut4oh")
+font_size = 22
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_12gsq"]
+colors = PackedColorArray(0.295061, 0.515804, 0.463963, 1, 0.14395, 0.40504, 0.325375, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_83cxq"]
+gradient = SubResource("Gradient_12gsq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_075ms"]
+texture = SubResource("GradientTexture1D_83cxq")
+
+[sub_resource type="Theme" id="Theme_ux2ks"]
+Button/styles/normal = SubResource("StyleBoxTexture_075ms")
+
+[sub_resource type="LabelSettings" id="LabelSettings_075ms"]
+font = ExtResource("7_ut4oh")
+font_size = 22
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Root_Scene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -149,11 +179,14 @@ draw_pass_1 = SubResource("QuadMesh_p0vpc")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kf6th")
 
-[node name="ObstacleManager" type="Node3D" parent="." node_paths=PackedStringArray("score_label", "player")]
+[node name="ObstacleManager" type="Node3D" parent="." node_paths=PackedStringArray("score_label", "game_over_screen", "final_score_label", "start_again_button", "player")]
 transform = Transform3D(0.998915, 0, 0.046566, 0, 1, 0, -0.046566, 0, 0.998915, 47.9075, 1, 0)
 script = ExtResource("2_fqahy")
 obstacle_scene = ExtResource("3_hleyi")
-score_label = NodePath("../CanvasLayer/Control/Label")
+score_label = NodePath("../CanvasLayer/GameScore/Score")
+game_over_screen = NodePath("../CanvasLayer/GameOver")
+final_score_label = NodePath("../CanvasLayer/GameOver/FinalScore")
+start_again_button = NodePath("../CanvasLayer/GameOver/Button")
 player = NodePath("../Player")
 
 [node name="Timer" type="Timer" parent="ObstacleManager"]
@@ -177,7 +210,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.42924, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="GameScore" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -185,7 +218,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control"]
+[node name="Score" type="Label" parent="CanvasLayer/GameScore"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -197,6 +230,82 @@ offset_bottom = 100.0
 grow_horizontal = 2
 text = "0"
 label_settings = SubResource("LabelSettings_op76v")
+horizontal_alignment = 1
+
+[node name="GameOver" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" type="Label" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -40.0
+offset_right = 159.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over
+"
+label_settings = SubResource("LabelSettings_12gsq")
+
+[node name="FinalScore" type="Label" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = 17.0
+offset_right = 159.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Your score: 0
+"
+label_settings = SubResource("LabelSettings_83cxq")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = 60.0
+offset_right = 136.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ux2ks")
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOver/Button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -11.5
+offset_right = 121.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start Again"
+label_settings = SubResource("LabelSettings_075ms")
 horizontal_alignment = 1
 
 [connection signal="timeout" from="ObstacleManager/Timer" to="ObstacleManager" method="_on_timer_timeout"]

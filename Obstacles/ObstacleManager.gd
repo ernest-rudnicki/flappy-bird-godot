@@ -7,6 +7,9 @@ extends Node3D
 @export var score_per_obstacle: int = 10;
 @export var score_obstacle_group = "score_obstacle"
 @export var score_label: Label
+@export var game_over_screen: Control
+@export var final_score_label: Label
+@export var start_again_button: Button
 
 @export var gap_size: float = 4.0
 @export var min_center: float = -4.0
@@ -106,6 +109,7 @@ func _on_area_entered(body: Node, obstacle: Area3D) -> void:
 		var hit_pos = obstacle.global_transform.origin
 		var hit_normal = (player.global_transform.origin - hit_pos).normalized()
 		player.explode(hit_pos, hit_normal)
+		make_game_over_screen()
 		stopped_movement = true
 
 func check_raycast_hit_obstacle() -> void:
@@ -117,4 +121,11 @@ func check_raycast_hit_obstacle() -> void:
 		has_hit = false;
 		score += score_per_obstacle
 		score_label.text = "%d" % score
+
+
+func make_game_over_screen() -> void:
+	score_label.visible = false
+	game_over_screen.visible = true
+	final_score_label.text = "Your score: %d" % score
+	
 		
