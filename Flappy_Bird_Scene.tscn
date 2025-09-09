@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://e2ho0q4agttx"]
+[gd_scene load_steps=33 format=3 uid="uid://e2ho0q4agttx"]
 
 [ext_resource type="Script" uid="uid://c5xoekviugg73" path="res://Player/Player_Movement.gd" id="1_kf6th"]
 [ext_resource type="Texture2D" uid="uid://bngkjwvfmhjn" path="res://Assets/sky_40_2k.png" id="2_0nxyy"]
@@ -9,6 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://4mky3a7py3xb" path="res://Obstacles/Obstacle.tscn" id="3_hleyi"]
 [ext_resource type="PackedScene" uid="uid://dyj0ocf07job3" path="res://Water/WaterPlane.tscn" id="5_7gexg"]
 [ext_resource type="FontFile" uid="uid://bvfcowijb3ihv" path="res://Assets/PressStart2P-Regular.ttf" id="7_ut4oh"]
+[ext_resource type="AudioStream" uid="uid://dgy56vgshwxo8" path="res://Music/Caketown 1.mp3" id="10_83cxq"]
+[ext_resource type="AudioStream" uid="uid://bhprb6ks8eeys" path="res://Sounds/airplane_prop.ogg" id="11_075ms"]
+[ext_resource type="AudioStream" uid="uid://qbikq8n3iro4" path="res://Sounds/laser1.wav" id="12_ux2ks"]
+[ext_resource type="AudioStream" uid="uid://cbq5djy0fw8th" path="res://Sounds/explodemini.wav" id="13_8f1k4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr540"]
 size = Vector3(2.7981, 0.953284, 2.45836)
@@ -140,11 +144,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7761, 0, 33.5115)
 keep_aspect = 0
 size = 20.0
 
-[node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
+[node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("plane_jump_sound", "plane_crash_sound") groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 0.838671, -0.544639, 0, 0.544639, 0.838671, 0, 0, 0)
 script = ExtResource("1_kf6th")
 maxYValue = 14.0
 shard_wreck_scene = ExtResource("2_12gsq")
+plane_jump_sound = NodePath("../PlaneJump")
+plane_crash_sound = NodePath("../PlaneCrash")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -0.0435791, 0.0688877, 0.25341)
@@ -307,5 +313,26 @@ grow_vertical = 2
 text = "Start Again"
 label_settings = SubResource("LabelSettings_075ms")
 horizontal_alignment = 1
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_83cxq")
+autoplay = true
+parameters/looping = true
+
+[node name="PlaneAmbience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_075ms")
+volume_db = -28.624
+pitch_scale = 0.71
+autoplay = true
+parameters/looping = true
+
+[node name="PlaneJump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_ux2ks")
+volume_db = -6.05
+
+[node name="PlaneCrash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_8f1k4")
+volume_db = -6.679
+pitch_scale = 0.74
 
 [connection signal="timeout" from="ObstacleManager/Timer" to="ObstacleManager" method="_on_timer_timeout"]

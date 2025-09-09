@@ -9,6 +9,9 @@ extends CharacterBody3D
 
 @export var shard_wreck_scene: PackedScene
 
+@export var plane_jump_sound: AudioStreamPlayer
+@export var plane_crash_sound: AudioStreamPlayer
+
 var isStillJumping: bool = false
 var hadFirstJump: bool = false
 var alive: bool = true
@@ -19,6 +22,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = jumpForce
 		isStillJumping = true
 		hadFirstJump = true
+		plane_jump_sound.play()
 	elif hadFirstJump:
 		velocity.y -= gravity * delta
 		
@@ -51,5 +55,6 @@ func explode(hit_pos: Vector3, hit_normal: Vector3) -> void:
 	wreck.global_transform = global_transform
 	
 	wreck.init(last_vel, hit_pos, hit_normal)
+	plane_crash_sound.play()
 	
 	
