@@ -34,6 +34,7 @@ func _ready() -> void:
 	precreate_obstacles()
 	reuse_unused_obstacle()
 	player_raycast = player.get_node("Raycast")
+	start_again_button.pressed.connect(restart_game)
 
 func _on_timer_timeout() -> void:
 	reuse_unused_obstacle()
@@ -122,10 +123,10 @@ func check_raycast_hit_obstacle() -> void:
 		score += score_per_obstacle
 		score_label.text = "%d" % score
 
-
 func make_game_over_screen() -> void:
 	score_label.visible = false
 	game_over_screen.visible = true
 	final_score_label.text = "Your score: %d" % score
-	
-		
+
+func restart_game() -> void:
+	get_tree().reload_current_scene()
