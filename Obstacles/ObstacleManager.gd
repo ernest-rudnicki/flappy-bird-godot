@@ -10,29 +10,31 @@ extends Node3D
 @export var game_over_screen: Control
 @export var final_score_label: Label
 @export var start_again_button: Button
+@export var start_game_button: Button
 
 @export var gap_size: float = 4.0
 @export var min_center: float = -4.0
 @export var max_center: float = 4.0
 @export var spawn_interval: float = 2.0
 @export var remove_position: float = -20.0
+@export var timer_wait_time: float = 2.0
 
 @export var precreated_obstacles_count = 20
 @export var player: CharacterBody3D
+@export var timer: Timer
 
 var obstacles: Array[Area3D] = []
 var unused_obstacles: Array[Area3D] = []
 var player_raycast: RayCast3D = null
 var has_hit: bool = false
-var stopped_movement: bool = false
+var stopped_movement: bool = true
+var game_started = false;
 
 var rng = RandomNumberGenerator.new()
 
 var score: int = 0;
 
 func _ready() -> void:
-	precreate_obstacles()
-	reuse_unused_obstacle()
 	player_raycast = player.get_node("Raycast")
 	start_again_button.pressed.connect(restart_game)
 
@@ -42,6 +44,19 @@ func _on_timer_timeout() -> void:
 func _process(delta: float) -> void:
 	move_all_obstacles(delta)
 	check_raycast_hit_obstacle()
+	
+func _input(event):
+	if event.is_action_pressed("jump"):
+		start_game()
+
+func start_game() -> void:
+	if game_started: return
+	game_started = true
+	stopped_movement = false
+	start_game_button.visible = false
+	timer.start(timer_wait_time)
+	precreate_obstacles()
+	reuse_unused_obstacle()
 	
 func move_all_obstacles(delta: float) -> void:
 	if stopped_movement: return
@@ -125,7 +140,7 @@ func check_raycast_hit_obstacle() -> void:
 
 func make_game_over_screen() -> void:
 	score_label.visible = false
-	game_over_screen.visible = true
+	game_over_screen.visible = true 
 	final_score_label.text = "Your score: %d" % score
 
 func restart_game() -> void:
