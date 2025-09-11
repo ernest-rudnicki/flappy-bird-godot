@@ -34,10 +34,10 @@ curve = SubResource("Curve_83cxq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ux2ks"]
 direction = Vector3(-1, 0, 0)
-spread = 15.0
+spread = 2.0
 initial_velocity_min = 8.0
 initial_velocity_max = 14.0
-gravity = Vector3(0, 0, 0)
+gravity = Vector3(-5, 0, 0)
 damping_min = 1.0
 damping_max = 1.6
 scale_curve = SubResource("CurveTexture_075ms")
@@ -147,6 +147,7 @@ size = 20.0
 [node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("plane_jump_sound", "plane_crash_sound") groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 0.838671, -0.544639, 0, 0.544639, 0.838671, 0, 0, 0)
 script = ExtResource("1_kf6th")
+jumpForce = 18.0
 maxYValue = 14.0
 shard_wreck_scene = ExtResource("2_12gsq")
 plane_jump_sound = NodePath("../PlaneJump")
@@ -165,18 +166,18 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="JetFlame" type="GPUParticles3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -1.52433, -0.128872, 0.827376)
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -0.952207, -0.128872, 0.827376)
 amount = 15
-lifetime = 0.3
+lifetime = 0.93
 preprocess = 1.48
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_ux2ks")
 draw_pass_1 = SubResource("QuadMesh_p0vpc")
 
-[node name="JetFlame2" type="GPUParticles3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -1.37322, -0.00290301, -0.880869)
+[node name="JetFlame3" type="GPUParticles3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -0.908563, 0.154695, -0.757887)
 amount = 15
-lifetime = 0.3
+lifetime = 0.93
 preprocess = 1.48
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_ux2ks")
