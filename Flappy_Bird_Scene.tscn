@@ -37,9 +37,8 @@ direction = Vector3(-1, 0, 0)
 spread = 2.0
 initial_velocity_min = 8.0
 initial_velocity_max = 14.0
-gravity = Vector3(-5, 0, 0)
-damping_min = 1.0
-damping_max = 1.6
+gravity = Vector3(0, 0, 0)
+damping_max = 0.6
 scale_curve = SubResource("CurveTexture_075ms")
 color_ramp = SubResource("GradientTexture1D_12gsq")
 turbulence_enabled = true
@@ -168,18 +167,16 @@ collide_with_bodies = false
 [node name="JetFlame" type="GPUParticles3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -0.952207, -0.128872, 0.827376)
 amount = 15
-lifetime = 0.93
+lifetime = 0.5
 preprocess = 1.48
-explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_ux2ks")
 draw_pass_1 = SubResource("QuadMesh_p0vpc")
 
-[node name="JetFlame3" type="GPUParticles3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -0.908563, 0.154695, -0.757887)
+[node name="JetFlame2" type="GPUParticles3D" parent="Player"]
+transform = Transform3D(0.996493, 0.0820117, -0.0166154, -0.0455742, 0.365392, -0.929737, -0.0701782, 0.927234, 0.367848, -1.10578, -0.219526, -0.802259)
 amount = 15
-lifetime = 0.93
+lifetime = 0.5
 preprocess = 1.48
-explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_ux2ks")
 draw_pass_1 = SubResource("QuadMesh_p0vpc")
 
