@@ -5,6 +5,8 @@ Instead of a bird, you pilot a custom–made rocket plane, dodging obstacles and
 
 All 3D assets were created in **Blender** and textured in **Substance Painter**, then polished with shaders, particles, and effects inside Godot.
 
+Available at: https://terminatt.itch.io/20-games-challenge-flappy-bird
+
 
 
 https://github.com/user-attachments/assets/c8498d93-022b-4b29-b43b-1b0f6df262a0
